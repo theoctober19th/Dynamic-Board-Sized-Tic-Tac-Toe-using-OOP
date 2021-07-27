@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="script.js"></script> 
+  </head>
+  <body>
+  
+  <!---Game Board Header--->
+      <div class="container" id="header">
+        <h1>TIC TAC TOE </h1>
+      </div>
+
+  <!---Game Score Board--->
+          <div class="score">
+              <h4><span> Player-O Score:</span><span id="player-1">0</span></h4>
+              <h4><span> Player-X Score:</span><span id="player-2">0</span></h4>
+              <h4><span> Tie:</span><span id="ties">0</span></h4>
+          </div>
+      </div>
+
+  <!---Board Size Form--->
+      <div class="container" id="gamePrompt">
+        <form id="boardSizeForm">
+          <label for="boardSize">Select the Board Size</label><br>
+          <input type="number" id="boardSize" name="boardSize"/>
+          <input type="submit" id="boardButton" value="Start"/>
+        </form>
+      </div>
+      
+  <!---Game Board--->
+      <div class="container" id="gameContainer">
+        <table id="gameGrid">
+        </table>
+      </div>
+
+  <!---Importing JQuery Script --->
+     <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous">
+      </script>
+
+  </body>
+</html>
