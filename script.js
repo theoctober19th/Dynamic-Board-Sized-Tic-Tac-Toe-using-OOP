@@ -2,14 +2,17 @@ var p1score = 0;
 var p2score = 0;
 var ties = 0;
 
-
 $(document).on('ready', function() {
-    $('boardSizeForm').on('submit', function(event) {
+
+    $('#boardSizeForm').on('submit', function(event) {
         var gameBoardSize = parseInt($('#boardSize').val());
         newGame = new GameBoard(gameBoardSize);
-        result = new Result;
         newGame.createGameBoard(gameBoardSize);
-        newGameBoard.onCellClick();
+        newGame.onCellClick();
+
+
+        result = new Result;
+        //result.checkWinner();
     });
 
 
@@ -19,7 +22,7 @@ $(document).on('ready', function() {
             this.boardSize = boardSize;
         }
 
-        createGameBoard(boardSize) {
+        createGameBoard() {
             $('#gameGrid').empty();
 
             // Creating rows in the board 
@@ -44,7 +47,6 @@ $(document).on('ready', function() {
                     $(this).attr('id', cellId);
                 });
             }
-
         }
 
         // Defining event for the cell clicks 
@@ -58,7 +60,7 @@ $(document).on('ready', function() {
                 }
 
                 // Checking if wining condition has met
-                result.checkWinner(gameBoardSize);
+                result.checkWinner();
 
                 // Increase turn counter
                 turn++;
@@ -69,6 +71,12 @@ $(document).on('ready', function() {
 
 
     class Result {
+
+        constructor(gameBoardSize) {
+            this.gameBoardSize = gameBoardSize;
+        }
+
+
         //Get the cell ids
         getIds(cellClass) {
                 return $(cellClass).map(function(index) {
@@ -113,7 +121,7 @@ $(document).on('ready', function() {
             }
 
             // Count the number of times a y-coordinate appears in the y-coordinates array
-            return countDuplicates(yCoords);
+            return this.countDuplicates(yCoords);
         }
 
 
@@ -127,7 +135,7 @@ $(document).on('ready', function() {
             }
 
             // Count the number of times a y-coordinate appears in the y-coordinates array
-            return countDuplicates(xCoords);
+            return this.countDuplicates(xCoords);
         }
 
         // Function to check if values are true
@@ -151,7 +159,7 @@ $(document).on('ready', function() {
             var secondaryDiagonalCells = [];
 
             for (var i = 0; i < playerCoordinates.length; i++) {
-                secondaryDiagonalCells.push(playerCoordinates[i][0] === (gameBoardSize - playerCoordinates[i][1] + 1));
+                secondaryDiagonalCells.push(playerCoordinates[i][0] === (this.gameBoardSize - playerCoordinates[i][1] + 1));
             }
 
             return secondaryDiagonalCells.filter(isTrue);
@@ -161,67 +169,66 @@ $(document).on('ready', function() {
         checkForWinningLines(rowCount, colCount, primaryDiagonalCount, secondaryDiagonalCount) {
             return (
                 // Checking if no. of cells in a row are equal to game board size
-                rowCount.includes(gameBoardSize) ||
+                rowCount.includes(this.gameBoardSize) ||
 
                 // Checking if no. of cells in a column are equal to game board size
-                colCount.includes(gameBoardSize) ||
+                colCount.includes(this.gameBoardSize) ||
 
                 // Checking if no. of primary diagonal cells are equal to the game board size
-                (primaryDiagonalCount.length === gameBoardSize) ||
+                (primaryDiagonalCount.length === this.gameBoardSize) ||
 
                 // Checking if no.of secondary diagonal cells are equal to the game board size
-                (secondaryDiagonalCount.length === gameBoardSize)
+                (secondaryDiagonalCount.length === this.gameBoardSize)
             );
         }
 
-        checkWinner(gameBoardSize) {
-            var gameBoardSize = gameBoardSize;
+        checkWinner() {
 
             //    For Player O::: 
             // Getting all id values for Player O
-            var oPlayerIds = getIds('.o');
+            var oPlayerIds = this.getIds('.o');
 
             // Getting coordinates from Player O's id values
-            var oplayerCoordinates = getCoordinates(oPlayerIds);
+            var oplayerCoordinates = this.getCoordinates(oPlayerIds);
 
             // Counting Player O appearing in each row of the board
-            var oPlayerRows = countRows(oplayerCoordinates);
+            var oPlayerRows = this.countRows(oplayerCoordinates);
 
             // Counting Player O appearing in each column of the board
-            var oPlayerCols = countColumns(oplayerCoordinates);
+            var oPlayerCols = this.countColumns(oplayerCoordinates);
 
             // Counting Player O appearing in primary diagonal of the board
-            var oPlayerPrimaryDiagonalCells = countPrimaryDiagonalCells(oplayerCoordinates);
+            var oPlayerPrimaryDiagonalCells = this.countPrimaryDiagonalCells(oplayerCoordinates);
 
             // Counting Player O appearing in secondary diagonal of the board
-            var oPlayerSecondaryDiagonalCells = countSecondaryDiagonalCells(oplayerCoordinates);
+            var oPlayerSecondaryDiagonalCells = this.countSecondaryDiagonalCells(oplayerCoordinates);
 
             // Checking for Player O's winning Conditions
-            var oPlayerWin = checkForWinningLines(oPlayerRows, oPlayerCols, oPlayerPrimaryDiagonalCells, oPlayerSecondaryDiagonalCells);
+            var oPlayerWin = this.checkForWinningLines(oPlayerRows, oPlayerCols, oPlayerPrimaryDiagonalCells, oPlayerSecondaryDiagonalCells);
 
 
 
             //    For Player O::: 
             // Getting all id values for Player X
-            var xPlayerIds = getIds('.x');
+            var xPlayerIds = this.getIds('.x');
 
             // Getting coordinates from Player X's id values
-            var xplayerCoordinates = getCoordinates(xPlayerIds);
+            var xplayerCoordinates = this.getCoordinates(xPlayerIds);
 
             // Counting Player X appearing in each row of the board
-            var xPlayerRows = countRows(xplayerCoordinates);
+            var xPlayerRows = this.countRows(xplayerCoordinates);
 
             // Counting Player X appearing in each column of the board
-            var xPlayerCols = countColumns(xplayerCoordinates);
+            var xPlayerCols = this.countColumns(xplayerCoordinates);
 
             // Counting Player X appearing in primary diagonal of the board
-            var xPlayerPrimaryDiagonalCells = countPrimaryDiagonalCells(xplayerCoordinates);
+            var xPlayerPrimaryDiagonalCells = this.countPrimaryDiagonalCells(xplayerCoordinates);
 
             // Counting Player X appearing in secondary diagonal of the board
-            var xPlayerSecondaryDiagonalCells = countSecondaryDiagonalCells(xplayerCoordinates);
+            var xPlayerSecondaryDiagonalCells = this.countSecondaryDiagonalCells(xplayerCoordinates);
 
             // Checking for Player X's winning Conditions
-            var xPlayerWin = checkForWinningLines(xPlayerRows, xPlayerCols, xPlayerPrimaryDiagonalCells, xPlayerSecondaryDiagonalCells);
+            var xPlayerWin = this.checkForWinningLines(xPlayerRows, xPlayerCols, xPlayerPrimaryDiagonalCells, xPlayerSecondaryDiagonalCells);
 
 
             // If Player O wins
@@ -248,4 +255,4 @@ $(document).on('ready', function() {
         }
     }
 
-});
+})
