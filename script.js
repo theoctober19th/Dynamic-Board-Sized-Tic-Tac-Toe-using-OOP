@@ -2,8 +2,7 @@ var p1score = 0;
 var p2score = 0;
 var ties = 0;
 
-$(document).on('ready', function() {
-
+$(document).ready(function() {
     class GameBoard {
         constructor(boardSize) {
             this.boardSize = boardSize;
@@ -124,11 +123,6 @@ $(document).on('ready', function() {
             return this.countDuplicates(xCoords);
         }
 
-        // Function to check if values are true
-        isTrue(value) {
-            return value === true;
-        }
-
         // Check for a primary diagonal win
         countPrimaryDiagonalCells(playerCoordinates) {
             var primaryDiagonalCells = [];
@@ -137,7 +131,7 @@ $(document).on('ready', function() {
                 primaryDiagonalCells.push(playerCoordinates[i][0] === playerCoordinates[i][1]);
             }
 
-            return primaryDiagonalCells.filter(isTrue);
+            return primaryDiagonalCells.filter((value) => value);
         }
 
         // Check for a Secondaryry diagonal win
@@ -148,7 +142,7 @@ $(document).on('ready', function() {
                 secondaryDiagonalCells.push(playerCoordinates[i][0] === (this.gameBoardSize - playerCoordinates[i][1] + 1));
             }
 
-            return secondaryDiagonalCells.filter(isTrue);
+            return secondaryDiagonalCells.filter((value) => value);
         }
 
         // Checking wining lines
@@ -242,13 +236,14 @@ $(document).on('ready', function() {
     }
 
      $('#boardSizeForm').on('submit', function(event) {
+        event.preventDefault();
         var gameBoardSize = parseInt($('#boardSize').val());
         newGame = new GameBoard(gameBoardSize);
         newGame.createGameBoard(gameBoardSize);
         newGame.onCellClick();
 
 
-        result = new Result;
-        //result.checkWinner();
+        result = new Result();
+        // result.checkWinner();
     });    
 })
