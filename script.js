@@ -4,19 +4,6 @@ var ties = 0;
 
 $(document).on('ready', function() {
 
-    $('#boardSizeForm').on('submit', function(event) {
-        var gameBoardSize = parseInt($('#boardSize').val());
-        newGame = new GameBoard(gameBoardSize);
-        newGame.createGameBoard(gameBoardSize);
-        newGame.onCellClick();
-
-
-        result = new Result;
-        //result.checkWinner();
-    });
-
-
-
     class GameBoard {
         constructor(boardSize) {
             this.boardSize = boardSize;
@@ -75,8 +62,7 @@ $(document).on('ready', function() {
         constructor(gameBoardSize) {
             this.gameBoardSize = gameBoardSize;
         }
-
-
+        
         //Get the cell ids
         getIds(cellClass) {
                 return $(cellClass).map(function(index) {
@@ -255,4 +241,14 @@ $(document).on('ready', function() {
         }
     }
 
+     $('#boardSizeForm').on('submit', function(event) {
+        var gameBoardSize = parseInt($('#boardSize').val());
+        newGame = new GameBoard(gameBoardSize);
+        newGame.createGameBoard(gameBoardSize);
+        newGame.onCellClick();
+
+
+        result = new Result;
+        //result.checkWinner();
+    });    
 })
